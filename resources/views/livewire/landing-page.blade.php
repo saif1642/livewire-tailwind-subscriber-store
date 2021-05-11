@@ -3,7 +3,7 @@
         class="flex flex-col bg-indigo-900 w-full h-screen"
         x-data="{
             showSubscribe:false,
-            showSuccess:true
+            showSuccess:false
         }"
     >
         <nav class="flex pt-5 justify-between container mx-auto text-indigo-200">
