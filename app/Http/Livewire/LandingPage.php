@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Models\Subscriber;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Auth\Notifications\VerifyEmail;
@@ -11,10 +12,18 @@ use Illuminate\Auth\Notifications\VerifyEmail;
 class LandingPage extends Component
 {
     public $email = 'test@example.com';
+    public $showSubscribe = false;
+    public $showSuccess = false;
 
     protected $rules = [
         'email' => 'required|email:filter|unique:subscribers,email'
     ];
+
+    public function mount(Request $request){
+        if( $request->has('verified') && $request->verified == 1){
+            $this->showSuccess = true;
+        }
+    }
 
     public function subscribe(){
         //\Log::debug($this->email);
@@ -39,6 +48,8 @@ class LandingPage extends Component
 
         }, $deadLockRetries = 5);
 
+        $this->showSubscribe = false;
+        $this->showSuccess = true;
         $this->reset('email');
     }
 
